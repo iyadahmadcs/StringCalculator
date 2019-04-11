@@ -34,10 +34,12 @@ namespace StringCalculator.Api.Controllers
                 };
             }
             var sum = _calculatorServices.GetSum(numbers);
+            var log = _calculatorServices.GetLog();
             return new ApiResult
             {
                 StatusCode = HttpStatusCode.OK,
-                Message = sum.ToString()
+                Message = sum.ToString(),
+                Log = log
             };
         }
 

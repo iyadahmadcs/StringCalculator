@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 
 namespace StringCalculator.Infrastructure.Models
 {
@@ -6,5 +7,6 @@ namespace StringCalculator.Infrastructure.Models
     {
         public HttpStatusCode StatusCode { get; set; }
         public string Message { get; set; }
+        public List<string> Log { get; set; }
     }
 }

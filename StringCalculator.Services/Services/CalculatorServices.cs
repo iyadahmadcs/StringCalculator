@@ -10,14 +10,8 @@ namespace StringCalculator.Services.Services
 {
     public interface ICalculatorServices
     {
-        /// <summary>
-        /// Handle a string of numbers with custom delimiters and return a List of positive integers. 
-        /// </summary>
-        /// <param name="numbers">String of numbers with custom delimiters.</param>
-        /// <returns>List of positive integers.</returns>
-        List<int> GetNumbers(string numbers);
-
         int GetSum(string numbers);
+        List<string> GetLog();
     }
     public class CalculatorServices : ICalculatorServices
     {
@@ -37,7 +31,7 @@ namespace StringCalculator.Services.Services
         /// </summary>
         /// <param name="numbers">String of numbers with custom delimiters.</param>
         /// <returns>List of positive integers.</returns>
-        public List<int> GetNumbers(string numbers)
+        private List<int> GetNumbers(string numbers)
         {
             List<string> delimiters = new List<string> { ",", "\n" };
             numbers = numbers.Replace("\\n", "\n");
@@ -106,5 +100,10 @@ namespace StringCalculator.Services.Services
             return sum;
         }
 
+        public List<string> GetLog()
+        {
+            var log = _eventBroker.AllEvents.Select(x => x.ToString()).ToList();
+            return log;
+        }
     }
 }
