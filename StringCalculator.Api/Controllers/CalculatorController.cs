@@ -9,13 +9,12 @@ namespace StringCalculator.Api.Controllers
     [ApiController]
     public class CalculatorController : Controller
     {
-        private readonly ICustomSplitServices _calculatorServices;
-
+        private readonly ICalculatorServices _calculatorServices;
         public CalculatorController(
-            ICustomSplitServices calculatorServices
+            ICalculatorServices customSplitServices
             )
         {
-            _calculatorServices = calculatorServices;
+            _calculatorServices = customSplitServices;
         }
 
         /// <summary>
@@ -34,13 +33,13 @@ namespace StringCalculator.Api.Controllers
                     Message = "The Sum = 0"
                 };
             }
-            var data = _calculatorServices.GetNumbers(numbers);
-
+            var sum = _calculatorServices.GetSum(numbers);
             return new ApiResult
             {
                 StatusCode = HttpStatusCode.OK,
-                Message = "Processing"
+                Message = sum.ToString()
             };
         }
+
     }
 }

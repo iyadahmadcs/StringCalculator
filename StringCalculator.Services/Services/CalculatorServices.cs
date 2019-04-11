@@ -1,11 +1,14 @@
-﻿using StringCalculator.Services.Extensions;
+﻿using StringCalculator.Services.EventSource;
+using StringCalculator.Services.EventSource.Commands;
+using StringCalculator.Services.EventSource.Queries;
+using StringCalculator.Services.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace StringCalculator.Services.Services
 {
-    public interface ICustomSplitServices
+    public interface ICalculatorServices
     {
         /// <summary>
         /// Handle a string of numbers with custom delimiters and return a List of positive integers. 
@@ -13,9 +16,22 @@ namespace StringCalculator.Services.Services
         /// <param name="numbers">String of numbers with custom delimiters.</param>
         /// <returns>List of positive integers.</returns>
         List<int> GetNumbers(string numbers);
+
+        int GetSum(string numbers);
     }
-    public class CustomSplitServices : ICustomSplitServices
+    public class CalculatorServices : ICalculatorServices
     {
+        private readonly IEventBroker _eventBroker;
+        private readonly ICalculator _calculator;
+        public CalculatorServices(
+            IEventBroker eventBroker,
+            ICalculator calculator
+            )
+        {
+            _eventBroker = eventBroker;
+            _calculator = calculator;
+        }
+
         /// <summary>
         /// Handle a string of numbers with custom delimiters and return a List of positive integers. 
         /// </summary>
@@ -75,6 +91,19 @@ namespace StringCalculator.Services.Services
                 throw new Exception($"Negatives not allowed { negatives.ToArrayMessage()}");
             }
             return numbersList;
+        }
+
+        public int GetSum(string numbers)
+        {
+            var data = GetNumbers(numbers);
+
+            foreach (var num in data)
+            {
+                _eventBroker.Command(new AddCommand(_calculator, num));
+            }
+
+            var sum = _eventBroker.Query<int>(new SumQuery { Target = _calculator });
+            return sum;
         }
 
     }

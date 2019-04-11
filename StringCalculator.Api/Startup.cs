@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StringCalculator.Infrastructure.Middlewares;
+using StringCalculator.Services.EventSource;
 using StringCalculator.Services.Services;
 
 namespace StringCalculator.Api
@@ -22,7 +23,9 @@ namespace StringCalculator.Api
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddScoped<ICustomSplitServices, CustomSplitServices>();
+            services.AddScoped<ICalculatorServices, CalculatorServices>();
+            services.AddScoped<IEventBroker, EventBroker>();
+            services.AddScoped<ICalculator, Calculator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
