@@ -2,6 +2,6 @@
 {
     public class Query
     {
-        public object Result;
+        public object Result { get; set; }
     }
 }

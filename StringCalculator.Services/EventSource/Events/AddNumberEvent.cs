@@ -2,8 +2,9 @@
 {
     public class AddNumberEvent : Event
     {
-        public Calculator Target;
-        public int Sum, NewValue;
+        public Calculator Target { get; set; }
+        public int Sum { get; set; }
+        public int NewValue { get; set; }
 
         public AddNumberEvent(Calculator target, int sum, int newValue)
         {

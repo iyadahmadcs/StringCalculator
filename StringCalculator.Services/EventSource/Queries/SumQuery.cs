@@ -2,6 +2,6 @@
 {
     public class SumQuery : Query
     {
-        public ICalculator Target;
+        public ICalculator Target { get; set; }
     }
 }

@@ -30,7 +30,7 @@ namespace StringCalculator.Api.Controllers
                 return new ApiResult
                 {
                     StatusCode = HttpStatusCode.OK,
-                    Message = "The Sum = 0"
+                    Message = "Sum = 0"
                 };
             }
             var sum = _calculatorServices.GetSum(numbers);
@@ -38,7 +38,7 @@ namespace StringCalculator.Api.Controllers
             return new ApiResult
             {
                 StatusCode = HttpStatusCode.OK,
-                Message = sum.ToString(),
+                Message = $"Sum = {sum}",
                 Log = log
             };
         }

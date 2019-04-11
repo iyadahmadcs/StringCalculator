@@ -33,16 +33,21 @@ namespace StringCalculator.Services.Services
         /// <returns>List of positive integers.</returns>
         private List<int> GetNumbers(string numbers)
         {
+            var strNumbers = numbers;
             List<string> delimiters = new List<string> { ",", "\n" };
-            numbers = numbers.Replace("\\n", "\n");
-            var numbersSection = numbers;
+            strNumbers = strNumbers.Replace("\\n", "\n");
+            var numbersSection = strNumbers;
 
-            if (numbers.StartsWith("//"))
+            if (strNumbers.StartsWith("//"))
             {
-                numbers = numbers.Remove(0, 2);
-                var index = numbers.IndexOf("\n");
-                var delimitersSection = numbers.Substring(0, index);
-                numbersSection = numbers.Substring(index + 1);
+                strNumbers = strNumbers.Remove(0, 2);
+                var index = strNumbers.IndexOf("\n");
+                if (index == -1)
+                {
+                    throw new Exception($"Invalid Numbers Structure [{ numbers}]");
+                }
+                var delimitersSection = strNumbers.Substring(0, index);
+                numbersSection = strNumbers.Substring(index + 1);
 
                 if (delimitersSection.StartsWith("["))
                 {
